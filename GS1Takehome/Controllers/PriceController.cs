@@ -1,3 +1,5 @@
+using GS1Takehome.Models.Entities;
+using GS1Takehome.Models.ResponseModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GS1Takehome.Controllers
@@ -13,16 +15,23 @@ namespace GS1Takehome.Controllers
 			_logger = logger;
 		}
 
-		[HttpGet("submit", Name = "SubmitPrice")]
-		public String SubmitPrice()
+		[HttpPost("submit", Name = "SubmitPrice")]
+		public SubmitPriceResponse SubmitPrice(ItemPrice itemPrice)
 		{
-			return "Ping";
+			return new SubmitPriceResponse() 
+			{ 
+				Id = 1
+			};
 		}
 
-		[HttpGet("submitStatus", Name = "SubmitPriceStatus")]
-		public String SubmitPriceStatus()
+		[HttpGet("priceSubmissionStatus", Name = "SubmitPriceStatus")]
+		public PriceStatusResponse SubmitPriceStatus(string id)
 		{
-			return "Ping";
+			return new PriceStatusResponse()
+			{
+				Status = PriceStatus.Failed,
+				Reason = "Default Response"
+			};
 		}
 
 		[HttpGet("ping", Name = "Ping")]
