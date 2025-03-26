@@ -42,7 +42,11 @@ This project implements a price submission API that allows users to submit price
 3.  **Restore NuGet packages:** `dotnet restore`
 4.  **Create database migration:** `dotnet ef migrations add [MigrationName]`
 5.  **Apply database migrations:** `dotnet ef database update`
-6.  **Run the application:** `dotnet run`
+6.  **Run the application:** 
+    `dotnet run` or 
+    Build and run the application using Docker:
+    - Build the Docker image: `docker build -t gs1takehome .`
+    - Run the Docker container: `docker run -p 5000:5000 gs1takehome`
 7.  **Use a tool like Postman or curl to interact with the API endpoints.**
 
 ### API Endpoints

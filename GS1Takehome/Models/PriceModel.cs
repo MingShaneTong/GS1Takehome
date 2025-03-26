@@ -7,12 +7,21 @@ namespace GS1Takehome.Models
 	public class PriceModel
 	{
 		public const int MaxAttempts = 3;
-		public const int IntervalMilliseconds = 15000;
+		public int IntervalMilliseconds = 15000;
 		private IDataReceiverService RetailerService;
+		private PriceContext PriceContext;
 
-		public PriceModel(IDataReceiverService retailerService)
+		public PriceModel(IDataReceiverService retailerService, PriceContext priceContext)
 		{
 			RetailerService = retailerService;
+			PriceContext = priceContext;
+		}
+
+		public PriceModel(IDataReceiverService retailerService, PriceContext priceContext, int waitInterval)
+		{
+			RetailerService = retailerService;
+			PriceContext = priceContext;
+			IntervalMilliseconds = waitInterval;
 		}
 
 		/**
@@ -30,31 +39,25 @@ namespace GS1Takehome.Models
 		 */
 		private ItemPriceSubmission CreatePriceSubmissionRequest(ItemPrice itemPrice)
 		{
-			using (var db = new PriceContext())
+			var submission = new ItemPriceSubmission
 			{
-				var submission = new ItemPriceSubmission
-				{
-					Gtin = itemPrice.Gtin,
-					Price = itemPrice.Price,
-					RequestDatetime = DateTime.Now
-				};
-				db.ItemPriceSubmissions.Add(submission);
-				db.SaveChanges();
-				return submission;
-			}
+				Gtin = itemPrice.Gtin,
+				Price = itemPrice.Price,
+				RequestDatetime = DateTime.Now
+			};
+			PriceContext.ItemPriceSubmissions.Add(submission);
+			PriceContext.SaveChanges();
+			return submission;
 		}
 
 		/**
 		 * Gets the submission data from the given id. 
 		 */
-		private ItemPriceSubmission? GetPriceSubmission(int id) 
+		public ItemPriceSubmission? GetPriceSubmission(int id) 
 		{
-			using (var db = new PriceContext())
-			{
-				return db.ItemPriceSubmissions
-					.Where(s => s.Id == id)
-					.FirstOrDefault();
-			}
+			return PriceContext.ItemPriceSubmissions
+				.Where(s => s.Id == id)
+				.FirstOrDefault();
 		}
 
 		/**
@@ -118,12 +121,9 @@ namespace GS1Takehome.Models
 		 */
 		private void SaveSubmissionDate(int id, DateTime dateTime) 
 		{
-			using (var db = new PriceContext())
-			{
-				var submission = db.ItemPriceSubmissions.Where(s => s.Id == id).First();
-				submission.SubmissionDatetime = dateTime;
-				db.SaveChanges();
-			}
+			var submission = PriceContext.ItemPriceSubmissions.Where(s => s.Id == id).First();
+			submission.SubmissionDatetime = dateTime;
+			PriceContext.SaveChanges();
 		}
 
 		/**
@@ -131,12 +131,9 @@ namespace GS1Takehome.Models
 		 */
 		private void SaveSubmittedDate(int id, DateTime dateTime)
 		{
-			using (var db = new PriceContext())
-			{
-				var submission = db.ItemPriceSubmissions.Where(s => s.Id == id).First();
-				submission.SubmittedDatetime = dateTime;
-				db.SaveChanges();
-			}
+			var submission = PriceContext.ItemPriceSubmissions.Where(s => s.Id == id).First();
+			submission.SubmittedDatetime = dateTime;
+			PriceContext.SaveChanges();
 		}
 
 
@@ -145,12 +142,9 @@ namespace GS1Takehome.Models
 		 */
 		private void SaveFailureDate(int id, DateTime dateTime)
 		{
-			using (var db = new PriceContext())
-			{
-				var submission = db.ItemPriceSubmissions.Where(s => s.Id == id).First();
-				submission.FailureDatetime = dateTime;
-				db.SaveChanges();
-			}
+			var submission = PriceContext.ItemPriceSubmissions.Where(s => s.Id == id).First();
+			submission.FailureDatetime = dateTime;
+			PriceContext.SaveChanges();
 		}
 	}
 }
