@@ -2,6 +2,9 @@
 
 namespace GS1Takehome.Models.Services
 {
+	/**
+	 * The service that handles price data. 
+	 */
     public interface IDataReceiverService
 	{
 		bool CanSubmitPrice(string gtin);

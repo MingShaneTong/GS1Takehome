@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 
 namespace GS1Takehome.Models.Entities
 {
+	/**
+	 * Represents a submission for the price of a item.
+	 */
 	public class ItemPriceSubmission
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]

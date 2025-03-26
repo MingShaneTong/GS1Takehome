@@ -19,7 +19,7 @@ namespace GS1Takehome.Controllers
 			PriceModel = priceModel;
 		}
 
-		[HttpPost("submit", Name = "SubmitPrice")]
+		[HttpPost(Name = "SubmitPrice")]
 		public SubmitPriceResponse PostSubmitPrice(ItemPrice itemPrice)
 		{
 			int id = PriceModel.SubmitPrice(itemPrice);
@@ -29,7 +29,7 @@ namespace GS1Takehome.Controllers
 			};
 		}
 
-		[HttpGet("priceSubmissionStatus", Name = "SubmitPriceStatus")]
+		[HttpGet(Name = "SubmitPriceStatus")]
 		public PriceStatusResponse GetSubmitPriceStatus(int id)
 		{
 			try 
