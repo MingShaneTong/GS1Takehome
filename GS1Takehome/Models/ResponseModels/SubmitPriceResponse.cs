@@ -1,7 +1,8 @@
-﻿using GS1Takehome.Models.Entities;
-
-namespace GS1Takehome.Models.ResponseModels
+﻿namespace GS1Takehome.Models.ResponseModels
 {
+	/**
+	 * Represents the response for the submit price api. 
+	 */
 	public class SubmitPriceResponse
 	{
 		public int Id { get; set; }

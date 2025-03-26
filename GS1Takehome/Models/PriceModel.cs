@@ -15,6 +15,9 @@ namespace GS1Takehome.Models
 			RetailerService = retailerService;
 		}
 
+		/**
+		 * Initialises a price submission by creating a submission request and queueing a submit price task. Returns submission id. 
+		 */
 		public int SubmitPrice(ItemPrice itemPrice)
 		{
 			ItemPriceSubmission submission = CreatePriceSubmissionRequest(itemPrice);
@@ -22,6 +25,9 @@ namespace GS1Takehome.Models
 			return submission.Id;
 		}
 
+		/**
+		 * Creates a record of the item price submission in the database. 
+		 */
 		private ItemPriceSubmission CreatePriceSubmissionRequest(ItemPrice itemPrice)
 		{
 			using (var db = new PriceContext())
@@ -38,6 +44,9 @@ namespace GS1Takehome.Models
 			}
 		}
 
+		/**
+		 * Gets the submission data from the given id. 
+		 */
 		private ItemPriceSubmission? GetPriceSubmission(int id) 
 		{
 			using (var db = new PriceContext())
@@ -48,7 +57,9 @@ namespace GS1Takehome.Models
 			}
 		}
 
-
+		/**
+		 * Gets the submission status of the given id. 
+		 */
 		public PriceStatus GetSubmitPriceStatus(int id)
 		{
 			var priceSubmission = GetPriceSubmission(id);
@@ -65,15 +76,21 @@ namespace GS1Takehome.Models
 				PriceStatus.Submitted : PriceStatus.PendingSubmission;
 		}
 
+		/**
+		 * Queues a submit price task for the given submission. 
+		 */
 		private void CreateSubmitPriceTask(ItemPriceSubmission submission)
 		{
 			BackgroundJob.Enqueue(() => WaitToSubmitPrice(submission));
 		}
 
+		/**
+		 * Waits until price can be submitted then submits the price and updates database entry. 
+		 */
 		public void WaitToSubmitPrice(ItemPriceSubmission submission)
 		{
+			// waits until service says can submit or out of attempts
 			bool canSubmit = false;
-
 			for (int attempt = 0; attempt < MaxAttempts; attempt++)
 			{
 				if (!canSubmit)
@@ -96,6 +113,9 @@ namespace GS1Takehome.Models
 			}
 		}
 
+		/**
+		 * Saves the submission date for the given submission id. 
+		 */
 		private void SaveSubmissionDate(int id, DateTime dateTime) 
 		{
 			using (var db = new PriceContext())
@@ -106,6 +126,9 @@ namespace GS1Takehome.Models
 			}
 		}
 
+		/**
+		 * Saves the submitted date for the given submission id. 
+		 */
 		private void SaveSubmittedDate(int id, DateTime dateTime)
 		{
 			using (var db = new PriceContext())
@@ -116,6 +139,10 @@ namespace GS1Takehome.Models
 			}
 		}
 
+
+		/**
+		 * Saves the submission date for the given submission id. 
+		 */
 		private void SaveFailureDate(int id, DateTime dateTime)
 		{
 			using (var db = new PriceContext())

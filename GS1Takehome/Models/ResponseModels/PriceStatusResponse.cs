@@ -3,6 +3,9 @@ using System.Text.Json.Serialization;
 
 namespace GS1Takehome.Models.ResponseModels
 {
+	/**
+	 * Represents the response for the submit price status request api. 
+	 */
 	public record PriceStatusResponse
 	{
 		[JsonConverter(typeof(JsonStringEnumConverter))]

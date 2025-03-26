@@ -12,6 +12,9 @@ namespace GS1Takehome.Models.Services
             SetGtinStatusPreset();
         }
 
+        /**
+         * Returns whether the price can be submitted or not. 
+         */
         public bool CanSubmitPrice(string gtin)
         {
             if (GtinStatusCollection.ContainsKey(gtin))
@@ -26,6 +29,9 @@ namespace GS1Takehome.Models.Services
             }
         }
 
+        /**
+         * Confirms price submission, throws exception if cannot submit price. 
+         */
         public void SubmitPrice(ItemPrice price)
         {
             if (!CanSubmitPrice(price.Gtin))
@@ -34,6 +40,9 @@ namespace GS1Takehome.Models.Services
             }
         }
 
+        /**
+         * Initialises Gtin Status collection. 
+         */
         private void SetGtinStatusPreset()
         {
             GtinStatusCollection.TryAdd("05021731354670", true);
@@ -58,6 +67,9 @@ namespace GS1Takehome.Models.Services
             GtinStatusCollection.TryAdd("09421906370003", false);
         }
 
+        /**
+         * Updates the Gtin status in a randomly chosen time. 
+         */
         private void UpdateGtinStatus(string gtin)
         {
             Task.Run(async () =>
