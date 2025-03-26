@@ -1,5 +1,7 @@
+using GS1Takehome.Models;
 using GS1Takehome.Models.Entities;
 using GS1Takehome.Models.ResponseModels;
+using GS1Takehome.Models.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GS1Takehome.Controllers
@@ -9,29 +11,43 @@ namespace GS1Takehome.Controllers
 	public class PriceController : ControllerBase
 	{
 		private readonly ILogger<PriceController> _logger;
+		private PriceModel PriceModel;
 
-		public PriceController(ILogger<PriceController> logger)
+		public PriceController(ILogger<PriceController> logger, PriceModel priceModel)
 		{
 			_logger = logger;
+			PriceModel = priceModel;
 		}
 
 		[HttpPost("submit", Name = "SubmitPrice")]
-		public SubmitPriceResponse SubmitPrice(ItemPrice itemPrice)
+		public SubmitPriceResponse PostSubmitPrice(ItemPrice itemPrice)
 		{
+			int id = PriceModel.SubmitPrice(itemPrice);
 			return new SubmitPriceResponse() 
 			{ 
-				Id = 1
+				Id = id
 			};
 		}
 
 		[HttpGet("priceSubmissionStatus", Name = "SubmitPriceStatus")]
-		public PriceStatusResponse SubmitPriceStatus(string id)
+		public PriceStatusResponse GetSubmitPriceStatus(int id)
 		{
-			return new PriceStatusResponse()
+			try 
 			{
-				Status = PriceStatus.Failed,
-				Reason = "Default Response"
-			};
+				PriceStatus status = PriceModel.GetSubmitPriceStatus(id);
+				return new PriceStatusResponse()
+				{
+					Status = status
+				};
+			}
+			catch (Exception ex)
+			{
+				return new PriceStatusResponse()
+				{
+					Status = PriceStatus.Failed,
+					Reason = ex.Message
+				};
+			}
 		}
 
 		[HttpGet("ping", Name = "Ping")]
