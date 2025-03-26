@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 // add dependencies
 builder.Services.AddScoped<IDataReceiverService, MockRetailerService>();
 builder.Services.AddScoped<PriceModel, PriceModel>();
+builder.Services.AddScoped<PriceContext, PriceContext>();
 
 var app = builder.Build();
 

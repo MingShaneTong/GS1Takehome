@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GS1Takehome", "GS1Takehome\GS1Takehome.csproj", "{3462FA73-EA95-4261-9E25-D8BC0CA0E667}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GS1Takehome.UnitTest", "GS1Takehome.UnitTest\GS1Takehome.UnitTest.csproj", "{F409E96C-8AE8-45AD-A280-26AD1F2A84D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3462FA73-EA95-4261-9E25-D8BC0CA0E667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3462FA73-EA95-4261-9E25-D8BC0CA0E667}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3462FA73-EA95-4261-9E25-D8BC0CA0E667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F409E96C-8AE8-45AD-A280-26AD1F2A84D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F409E96C-8AE8-45AD-A280-26AD1F2A84D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F409E96C-8AE8-45AD-A280-26AD1F2A84D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F409E96C-8AE8-45AD-A280-26AD1F2A84D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
